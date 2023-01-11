@@ -1,0 +1,67 @@
+
+/*
+File : motor_testing.ino
+Usage :
+    - Upload this code and give inputs
+        - 1,30 -> This will move base motor to 30 angle
+
+*/
+#include <Servo.h>
+
+
+const int base=2;
+const int shoulder=3;
+const int elbow=4;
+const int waist=5;
+const int waist_roll=6;
+const int gripper=7;
+
+
+Servo myservoB;
+Servo myservoS;
+Servo myservoE;
+Servo myservoW;
+Servo myservoWR;
+Servo myservoG;
+
+void setup() {
+  Serial.begin(9600);
+  myservoB.attach(base);
+  myservoS.attach(shoulder);//makes lots of sounds
+  myservoE.attach(elbow);
+  myservoW.attach(waist);
+  myservoWR.attach(waist_roll);
+  myservoG.attach(gripper);
+  Serial.begin(9600);
+  myservoG.write(40);
+  myservoB.write(20);
+}
+
+void loop() {
+    if (Serial.available() > 0) {
+    String input = Serial.readString();
+    String nums[] = input.split(",");
+    int motor_number = nums[0].toInt();
+    int angle = nums[1].toInt();
+
+    if(motor_number = 1){
+        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+        myservoB.write(angle);
+        delay(500);
+    }
+    if(motor_number = 2){
+        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+        myservoB.write(angle);
+        delay(500);
+    }
+
+    if(motor_number = 3){
+        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+        myservoB.write(angle);
+        delay(500);
+    }
+
+  }
+
+}
+
