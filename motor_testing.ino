@@ -39,44 +39,44 @@ void setup() {
 
 void loop() {
     if (Serial.available() > 0) {
-    String input_part_a ==Serial.readStringUntil(','); // writes in the string all the inputs till a comma
+    String input_part_a =Serial.readStringUntil(','); // writes in the string all the inputs till a comma
     Serial.read();
-    String input_part_b ==Serial.readStringUntil(',');
-    int motor_number ==input_part_a.toInt();
-    int angle ==input_part_b.toInt();
+    String input_part_b =Serial.readStringUntil(',');
+    int motor_number =input_part_a.toInt();
+    int angle =input_part_b.toInt();
     motor_test(motor_number,angle);
 }
 
 }
 
 void motor_test(int motor_pin , int angle){
-    if(motor_number == 1){
-        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+    if(motor_pin == 1){
+        Serial.println("Rotating Motor "+ String(motor_pin) + " with angle  " + String(angle));
         myservoB.write(angle);
         delay(500);
     }
-    if(motor_number ==2){
-        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+    if(motor_pin ==2){
+        Serial.println("Rotating Motor "+ String(motor_pin) + " with angle  " + String(angle));
         myservoS.write(angle);
         delay(500);
     }
-    if(motor_number ==3){
-        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+    if(motor_pin ==3){
+        Serial.println("Rotating Motor "+ String(motor_pin) + " with angle  " + String(angle));
         myservoE.write(angle);
         delay(500);
     }
-    if(motor_number ==4){
-        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+    if(motor_pin ==4){
+        Serial.println("Rotating Motor "+ String(motor_pin) + " with angle  " + String(angle));
         myservoW.write(angle);
         delay(500);
     }
-        if(motor_number ==5){
-        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+        if(motor_pin ==5){
+        Serial.println("Rotating Motor "+ String(motor_pin) + " with angle  " + String(angle));
         myservoWR.write(angle);
         delay(500);
     }
-        if(motor_number ==6){
-        Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
+        if(motor_pin ==6){
+        Serial.println("Rotating Motor "+ String(motor_pin) + " with angle  " + String(angle));
         myservoG.write(angle);
         delay(500);
     }
