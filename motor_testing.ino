@@ -39,10 +39,11 @@ void setup() {
 
 void loop() {
     if (Serial.available() > 0) {
-    String input = Serial.readString();
-    String nums[] = input.split(",");
-    int motor_number = nums[0].toInt();
-    int angle = nums[1].toInt();
+    String input_part_a = Serial.readStringUntil(','); // writes in the string all the inputs till a comma
+    Serial.read();
+    String input_part_b = Serial.readStringUntil(',');
+    int motor_number = input_part_a.toInt();
+    int angle = input_part_b.toInt();
 
     if(motor_number = 1){
         Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
@@ -51,13 +52,13 @@ void loop() {
     }
     if(motor_number = 2){
         Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
-        myservoB.write(angle);
+        myservoS.write(angle);
         delay(500);
     }
 
     if(motor_number = 3){
         Serial.println("Rotating Motor "+ String(motor_number) + " with angle  " + String(angle));
-        myservoB.write(angle);
+        myservoE.write(angle);
         delay(500);
     }
 
