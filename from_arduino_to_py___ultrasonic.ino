@@ -1,3 +1,11 @@
+/*
+this code will send a signal to python ( in RPI ) when ever the ultra sonic sensor detect obstical ( distance less than 16 ) if the obstcal is determend by 
+python as a waterbottle it will recive data(1) and the ARM will remove it .. otherwise it will receive 2 which is not a bottle ( so the arm will stay in the 
+initial position and later on when i add the pid motor will avoid the obstical)
+*/
+
+
+
 #include <Servo.h>
 //ULTRA SONIC SENSOR
 #define echoPin 9 
