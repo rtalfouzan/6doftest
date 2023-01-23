@@ -1,3 +1,8 @@
+#after receving signal from arduino that an obstical/object is infront of the robot the code will check if this obstical is a bottle send 1 back to 
+# arduino or not a bottle and sends 2 to the arduino
+
+
+
 import cv2
 import numpy as np
 #import tensorflow as tf
