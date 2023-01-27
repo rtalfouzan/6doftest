@@ -1,4 +1,4 @@
-#after receving signal from arduino that an obstical/object is infront of the robot the code will check if this obstical is a bottle send 1 back to 
+#after receving signal from arduino that an obstical/object is infront of the robot the code will check if this obstical is a bottle send 1 back to
 # arduino or not a bottle and sends 2 to the arduino
 
 
@@ -19,7 +19,7 @@ def  start_model():
     global model
     global image
     global ret
-    
+
     # Load the model
     model = load_model('keras_model.h5')
     #custom_objects={'Functional': tensorflow.keras.models.Model})
@@ -27,21 +27,21 @@ def  start_model():
     print(model.summary())
 
     # CAMERA can be 0 or 1 based on default camera of your computer.
-    
+
 
     # Grab the labels from the labels.txt file. This will be used later.
     labels = open('labels.txt', 'r').readlines()
             # Grab the webcameras image.
-    
-        
+
+
 
         # Make the image a numpy array and reshape it to the models input shape.
-   
+
 
 def check_cam():
     global camera
-    
-    
+
+
     camera = cv2.VideoCapture(0)
 
     count = 0
@@ -64,7 +64,7 @@ def check_cam():
             #print(labels[np.argmax(probabilities)])
             pred = (labels[np.argmax(probabilities)][0])
 
-                  
+
             if ( count < 11):
                 if ( pred == '0'):
                     counta = counta + 1
@@ -79,9 +79,9 @@ def check_cam():
                     print("NoBottle WINS")
                     ser.write(str(2).encode('utf-8'))
                     break
-        
 
-    
+
+
 if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     ser.reset_input_buffer()

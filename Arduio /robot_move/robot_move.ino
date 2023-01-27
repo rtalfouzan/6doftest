@@ -1,15 +1,16 @@
 /*
-this code will send a signal to python ( in RPI ) when ever the ultra sonic sensor detect obstical ( distance less than 16 ) if the obstcal is determend by 
-python as a waterbottle it will recive data(1) and the ARM will remove it .. otherwise it will receive 2 which is not a bottle ( so the arm will stay in the 
+this code will send a signal to python ( in RPI ) when ever the ultra sonic sensor detect obstical ( distance less than 16 ) if the obstcal is determend by
+python as a waterbottle it will recive data(1) and the ARM will remove it .. otherwise it will receive 2 which is not a bottle ( so the arm will stay in the
 initial position and later on when i add the pid motor will avoid the obstical)
+
 */
 
 
 
 #include <Servo.h>
 //ULTRA SONIC SENSOR
-#define echoPin 9 
-#define trigPin 10 
+#define echoPin 9
+#define trigPin 10
 long duration; // variable for the duration of sound wave travel
 int distance; // variable for the distance measurement
 
@@ -37,7 +38,7 @@ Servo myservoG;
 //void setArm(int b, int s, int e, int w, int wr , int g);
 
 void setArm(int b, int s, int e, int w, int wr , int g) {
-  
+
   myservoS.write(s);
   delay(500);
   myservoW.write(w);
@@ -59,13 +60,13 @@ void setArm(int b, int s, int e, int w, int wr , int g) {
 void setup() {
   Serial.begin(9600);
 
-  // if distance < 10 then send msg to python 
+  // if distance < 10 then send msg to python
   //and start detecting
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
   delay(1000);
-  pinMode(led, OUTPUT); 
-  digitalWrite(led, LOW);  
+  pinMode(led, OUTPUT);
+  digitalWrite(led, LOW);
     //servos
   myservoB.attach(base);
   myservoS.attach(shoulder);
@@ -102,25 +103,25 @@ void loop() {
         if (data = 1) {
           delay(3000);
           setArm(0, 45 , 180 , 30, 50 , 30);
-   
+
           delay(3000);
           setArm(0, 75 , 110 , 180, 50 , 0);
           delay(3000);
           setArm(0,90 , 180 , 0, 50 , 0);
           delay(3000);
         }
-        
+
         if (data = 2) {
           setArm(0,90 , 180 , 0, 50 , 0);
           delay(3000);
         }
-    
+
      }
      }
   if (distance > 16){
     Serial.println( "0");
    // Serial.println(distance);
-    
+
   }
-   
+
 }
