@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 import serial
+import time
 
 def start_model():
     global labels
@@ -35,14 +36,11 @@ def check_cam():
         pred = (labels[np.argmax(probabilities)][0])
 
         if pred == '0':
-            if(detection < 1):
                 ser.write(str(1).encode('utf-8'))
                 print("Bottle")
-                detection = detection +1
         else:
             ser.write(str(2).encode('utf-8'))
             print("No Bottle")
-        print(state , " // " , func_calls , " // ", detection)
         ser.reset_input_buffer()
     camera.release()
 
@@ -50,26 +48,28 @@ if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     ser.reset_input_buffer()
     start_model()
-    prev_state = 1
     state = 0
-    detection = 0
-    func_calls =0
+
+    test_timing =True
+    time_serial_read = True
+    time_check_cam = False
+
+    print_all_serial = False
 
     # Use a while loop to continuously check for serial data
-    while True:
-        if ser.in_waiting > 0 and state != 3:
+    while test_timing:
+        if time_serial_read:
+            start_time = time.time()
             state = ser.readline().decode('utf-8').strip()
-            if state.isnumeric():
-                if state != prev_state:
-                    print("State ",state)
-                    if state == '1': # Obstacle detected by US
-                        check_cam()
-                    elif(state == '2'):
-                        print("Robot Throwing Bottle")
-                    elif(state == '3'):
-                        print("Arm back in Origin Position")
-                        detection = 0
-        prev_state = state
+            print("State ", state)
+            print("Time Read Serial : ", time.time() - start_time)
+        elif time_check_cam:
+            start_time = time.time()
+            check_cam()
+            print("Time Check Cam: ", time.time() - start_time)
 
-
+    while print_all_serial:
+        while ser.in_waiting:
+            serial_data = ser.readline().decode('utf-8').strip()
+            print(serial_data)
 

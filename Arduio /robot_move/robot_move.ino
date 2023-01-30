@@ -24,6 +24,10 @@ Servo myservoW;
 Servo myservoWR;
 Servo myservoG;
 
+unsigned long previousMillis = 0;
+const long interval = 300;
+
+
 void setArm(int b, int s, int e, int w, int wr, int g) {
   myservoS.write(s);
   delay(1000);
@@ -60,8 +64,7 @@ void setup() {
   delay(3000);
   setArm(0, 90, 180, 0, 50, 0);
 }
-
-void loop() {
+void read_distance(){
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
@@ -75,7 +78,13 @@ void loop() {
   else if (distance > 17 ) {
         Serial.println("0"); // No obstacle detected
   }
-
+}
+void loop() {
+    unsigned long currentMillis = millis();
+if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    read_distance();
+  }
   if (Serial.available() > 0) {
         String data = Serial.readStringUntil('\n');
         if (data == "1") {
@@ -94,4 +103,3 @@ void loop() {
 
 
   }
-
