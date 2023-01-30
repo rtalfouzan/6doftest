@@ -10,7 +10,7 @@ def start_model():
     global ret
 
     # Load the model
-    model = load_model('model.h5')
+    model = load_model('keras_model.h5')
     print(model.summary())
     print("\n\n Model Loaded \n\n")
 
@@ -18,7 +18,7 @@ def start_model():
     labels = open('labels.txt', 'r').readlines()
 
 def check_cam():
-    global camera , detection , func_calls , state
+    global camera , detection
 
     camera = cv2.VideoCapture(0)
 
@@ -32,6 +32,7 @@ def check_cam():
         # Normalize the image array
         image = (image / 127.5) - 1
         probabilities = model.predict(image)
+        print(" ",probabilities, " -- ")
         pred = (labels[np.argmax(probabilities)][0])
 
         if pred == '0':
@@ -42,7 +43,7 @@ def check_cam():
         else:
             ser.write(str(2).encode('utf-8'))
             print("No Bottle")
-        print(state , " // " , func_calls , " // ", detection)
+        print("Waiting for State Change infront of UltraSonic:")
         ser.reset_input_buffer()
     camera.release()
 
@@ -65,9 +66,11 @@ if __name__ == '__main__':
                     if state == '1': # Obstacle detected by US
                         check_cam()
                     elif(state == '2'):
+                        print("="*30)
                         print("Robot Throwing Bottle")
                     elif(state == '3'):
-                        print("Arm back in Origin Position")
+                        print("Arm back in Origin Position\n")
+                        print("="*30)
                         detection = 0
         prev_state = state
 

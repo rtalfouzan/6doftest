@@ -11,7 +11,7 @@ int led = 13;
 
 // Servos
 const int base = 2;
-const int shoulder = 3;
+const int shoulder = 13;
 const int elbow = 4;
 const int waist = 5;
 const int waist_roll = 6;
@@ -61,8 +61,9 @@ void setup() {
   myservoWR.attach(waist_roll);
   myservoG.attach(gripper);
 
-  delay(3000);
+//  /Serial.println("Initial Setup ");
   setArm(0, 90, 180, 0, 50, 0);
+// / Serial.
 }
 void read_distance(){
   digitalWrite(trigPin, LOW);
@@ -87,6 +88,7 @@ if (currentMillis - previousMillis >= interval) {
   }
   if (Serial.available() > 0) {
         String data = Serial.readStringUntil('\n');
+//        Serial.println(data);/
         if (data == "1") {
           Serial.println("2");
           setArm(0, 45, 180, 30, 50, 30);
