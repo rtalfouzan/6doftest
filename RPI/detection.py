@@ -23,6 +23,8 @@ def check_cam():
     camera = cv2.VideoCapture(0)
 
     ret, image = camera.read()
+    
+    camera.release()
 
     if ret:
         # Resize the raw image into (224-height,224-width) pixels.
@@ -45,7 +47,6 @@ def check_cam():
             print("No Bottle")
         print("Waiting for State Change infront of UltraSonic:")
         ser.reset_input_buffer()
-    camera.release()
 
 if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
